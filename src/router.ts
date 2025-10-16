@@ -21,7 +21,9 @@ router.post('/',
     body('price')
         .isNumeric()
         .notEmpty()
-        .withMessage('El precio del producto no puede estar vació'),
+        .withMessage('El precio del producto no puede estar vació y debe ser numérico')
+        .custom(value => value > 0)
+        .withMessage('El precio del producto no puede ser 0'),
     handleInputErrors,
     createProducts
 );
@@ -32,11 +34,21 @@ router.put('/:id',
         .withMessage("El id es obligatorio")
         .notEmpty()
         .withMessage("El id es obligatorio"),
+    body('name')
+        .isString()
+        .notEmpty()
+        .withMessage('El nombre del producto no puede estar vació'),
+    body('price')
+        .isNumeric()
+        .notEmpty()
+        .withMessage('El precio del producto no puede estar vació y debe ser numérico')
+        .custom(value => value > 0)
+        .withMessage('El precio del producto no puede ser 0'),
     handleInputErrors,
     updateProduct
 );
 
-router.put('/:id',
+router.patch('/:id',
     param('id')
         .isInt()
         .withMessage("El id es obligatorio")

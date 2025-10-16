@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import Product from '../models/Product.model';
 
+const PRODUCT_NOT_FOUND = 'Producto no encontrado!';
+
 export const getProducts = async (req: Request, res: Response) => {
     try {
         const products = await Product.findAll({
@@ -55,7 +57,7 @@ export const createProducts = async (req: Request, res: Response) => {
     // }
     try {
         const product = await Product.create(req.body);
-        res.json({ data: product })
+        res.status(201).json({ data: product })
     } catch (error) {
         console.log(error);
         res.json({ error: error })
@@ -68,7 +70,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
     if (!product) {
         return res.status(404).json({
-            error: "Producto no encontrado"
+            error: PRODUCT_NOT_FOUND
         });
     }
 
@@ -84,7 +86,7 @@ export const updateAvailability = async (req: Request, res: Response) => {
 
     if (!product) {
         return res.status(404).json({
-            error: "Producto no encontrado"
+            error: PRODUCT_NOT_FOUND
         });
     }
     const { availability } = req.body;
@@ -101,11 +103,11 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
     if (!product) {
         return res.status(404).json({
-            error: "Producto no encontrado"
+            error: PRODUCT_NOT_FOUND
         });
     }
 
     await product.destroy();
 
-    res.json({ data: "Eliminado!" })
+    res.json({ data: "Producto Eliminado!" })
 };
