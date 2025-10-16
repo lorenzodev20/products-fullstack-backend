@@ -27,7 +27,7 @@ export const getProductById = async (req: Request, res: Response) => {
         });
 
         if (!product) {
-            return res.status(404).json({ error: 'Producto no encontrado!' });
+            return res.status(404).json({ error: PRODUCT_NOT_FOUND });
         }
 
         res.json({ data: product })

@@ -1,7 +1,6 @@
 import request from "supertest";
 import server from "../../server";
 
-
 describe('POST /api/products', () => {
 
     it('should display validation errors', async () => {
@@ -144,7 +143,7 @@ describe('PUT /api/products/:id', () => {
 });
 
 describe('DELETE /api/products/:id', () => {
-    
+
     it('Should return a 404 response for a non-existent product', async () => {
         const productId = 2000;
         const response = await request(server).delete(`/api/products/${productId}`);
@@ -160,5 +159,16 @@ describe('DELETE /api/products/:id', () => {
         expect(response.body.data).toBe("Producto Eliminado!");
         expect(response.status).not.toBe(404);
         expect(response.status).not.toBe(400);
+    });
+});
+
+describe('PATCH /api/products/:id', () => {
+    it('should return 404 response for a non-existing product', async () => {
+        const productId = 2000;
+        const response = await request(server).patch(`/api/products/${productId}`);
+        expect(response.status).toBe(404);
+        expect(response.body.error).toBe('Producto no encontrado!');
+        expect(response.status).not.toBe(200);
+        expect(response.body).not.toHaveProperty('data');
     });
 });
