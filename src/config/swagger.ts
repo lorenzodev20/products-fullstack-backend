@@ -1,4 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc";
+import { SwaggerUiOptions } from "swagger-ui-express";
 
 const options: swaggerJSDoc.Options = {
     swaggerDefinition: {
@@ -22,4 +23,12 @@ const options: swaggerJSDoc.Options = {
 
 const swaggerSpec = swaggerJSDoc(options);
 
+const swaggerUiOptions: SwaggerUiOptions = {
+    customSiteTitle: `REST API Express + TS`
+}
+
 export default swaggerSpec;
+
+export {
+    swaggerUiOptions
+}
